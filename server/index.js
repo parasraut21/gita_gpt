@@ -8,18 +8,25 @@ const pdfParse = require('pdf-parse');
 
 let gitaText = '';
 
-let dataBuffer = fs.readFileSync('./Bhagavad_Gita_As_It_Is.pdf');
+let dataBuffer = fs.readFileSync('./gita_pdf.pdf');
 
 pdfParse(dataBuffer).then(function(data) {
     gitaText = data.text;
 });
 
-console.log(gitaText);
 app.post('/api/query', (req, res) => {
-  const query = req.body['query'];
-  const response = gitaText.includes(query) ? 'Found in Gita' : 'Not found in Gita';
-  console.log(query);
-  res.json({ response });
+  const query = 'Q: ' + req.body['query'];
+  const startIndex = gitaText.indexOf(query);
+  
+  if (startIndex === -1) {
+    res.json({ response: 'Question not found in Gita' });
+    return;
+  }
+
+  const endIndex = gitaText.indexOf('Q: ', startIndex + query.length);
+  const answer = gitaText.substring(startIndex, endIndex !== -1 ? endIndex : undefined);
+
+  res.json({ response: answer });
 });
 
 app.listen(3000, () => {
