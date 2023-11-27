@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap');
 
 
 .background{
@@ -20,6 +20,7 @@
     max-width: 50%;
     margin: auto;
     height: 76%;
+    
 }
 .firsthalf img{
     padding: 20px;
@@ -42,4 +43,48 @@
     height: 70%;
     width: 100%;
     font-family: 'Ubuntu', sans-serif;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap');
+
+.background {
+  background: rgba(0, 0, 0, 0.7) url("back.jpg");
+  background-size: cover;
+  background-blend-mode: darken;
 }
+
+.about-section {
+  height: 100vh;
+  padding: 20px; /* Added padding for better spacing */
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px; /* Adjusted max-width for better responsiveness */
+  margin: auto;
+}
+
+.firsthalf img {
+  width: 100%; /* Make the image responsive within its container */
+  max-height: 100%; /* Ensure the image doesn't exceed the container height */
+  border-radius: 8px; /* Added border-radius for a more polished look */
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff; /* Changed text color to white */
+  max-width: 60%;
+  margin: 30px auto;
+}
+
+.secondhalf {
+  font-size: 18px; /* Adjusted font size for better readability */
+  width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* Add additional styling as needed */
