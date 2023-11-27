@@ -10,7 +10,7 @@ const[home,nothome]=useState(true)
       <nav className={home?'navbar backgroun' :'navbar background'}>
         <div className='navlist'>
         <div className='logo'>
-       <img src={require('./top.jpg')} alt='Picture'></img>
+       <img src={require('./krishnatrath.jpg')} alt='Picture'></img>
       <h1>GITAGPT</h1>
       </div>
      <li className={home?'active':""  }   onClick={()=>nothome(true)}><NavLink to="/Home">Home</NavLink></li>
@@ -22,3 +22,7 @@ const[home,nothome]=useState(true)
 }
 
 export default Navbar
+
+
+
+
