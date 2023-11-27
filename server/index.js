@@ -8,25 +8,40 @@ const pdfParse = require('pdf-parse');
 
 let gitaText = '';
 
-let dataBuffer = fs.readFileSync('./gita_pdf.pdf');
+let dataBuffer = fs.readFileSync('./gita_pdf1.pdf');
 
 pdfParse(dataBuffer).then(function(data) {
-    gitaText = data.text;
+    gitaText = data.text.toLowerCase();
 });
 
 app.post('/api/query', (req, res) => {
-  const query = 'Q: ' + req.body['query'];
-  const startIndex = gitaText.indexOf(query);
-  
-  if (startIndex === -1) {
-    res.json({ response: 'Question not found in Gita' });
-    return;
+  const queryWords = req.body['query'].toLowerCase().split(' ');
+  const lines = gitaText.split('\n');
+
+  let maxMatchCount = 0;
+  let bestMatch = 'Question not found in Gita';
+
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].startsWith('q: ')) {
+      const questionWords = lines[i].split(' ');
+      let matchCount = 0;
+      for (const word of queryWords) {
+        if (questionWords.includes(word)) {
+          matchCount++;
+        }
+      }
+      if (matchCount > maxMatchCount) {
+        maxMatchCount = matchCount;
+        let answer = lines[i];
+        for (let j = i + 1; j < lines.length && !lines[j].startsWith('q: '); j++) {
+          answer += '\n' + lines[j];
+        }
+        bestMatch = answer;
+      }
+    }
   }
 
-  const endIndex = gitaText.indexOf('Q: ', startIndex + query.length);
-  const answer = gitaText.substring(startIndex, endIndex !== -1 ? endIndex : undefined);
-
-  res.json({ response: answer });
+  res.json({ response: bestMatch });
 });
 
 app.listen(3000, () => {
